@@ -1,0 +1,13 @@
+<div class="delimitation">
+    <div class="container">
+        <h4>
+            History
+            <img src="/assets/icons/trash-can.svg" alt="Delete All" title="Delete history">
+        </h4>
+        <ul>
+            <li *ngFor="let item of videoHistory" (click)="currentVideoURLChange.emit(item)">{{item}}
+                <button title="Delete entry" (click)="removeURLHistory(item)">x</button>
+            </li>
+        </ul>
+    </div>
+</div>

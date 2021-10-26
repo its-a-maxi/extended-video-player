@@ -1,0 +1,67 @@
+.delimitation
+{
+    position: absolute;
+    width: 100%;
+    height: 15%;
+}
+
+.searchBar
+{
+    position: absolute;
+    background-color: rgba(245, 245, 245, .8);
+    height: 40%;
+    width: 55%;
+    border-radius: 10px;
+
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
+}
+
+input
+{
+    position: absolute;
+    width: 90%;
+    height: 80%;
+
+    top: 0;
+    bottom: 0;
+    left: 3%;
+    margin: auto;
+
+    border: none;
+    background-color: transparent;
+
+    font-size: medium;
+}
+
+input:focus
+{
+    outline: none;
+}
+
+button
+{
+    position: absolute;
+    width: 4%;
+    height: 80%;
+
+    top: 0;
+    bottom: 0;
+    right: 2%;
+    margin: auto;
+    
+    border: none;
+    background-color: transparent;
+    
+    font-size: large;
+    font-weight: bold;
+    color: rgba(0, 0, 0, .4);
+}
+
+button:hover
+{
+    cursor: pointer;
+    color: rgba(0, 0, 0, 1);
+}

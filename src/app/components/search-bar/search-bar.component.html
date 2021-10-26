@@ -1,0 +1,8 @@
+<div class="delimitation">
+    <div class="searchBar">
+        <form (ngSubmit)="search()">
+            <input type="text" name='videoURL' [placeholder]="currentVideoURL != '' ? currentVideoURL : 'Youtube URL'" [(ngModel)]="videoURL">
+            <button type="submit">></button>
+        </form>
+    </div>
+</div>

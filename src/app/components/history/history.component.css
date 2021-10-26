@@ -1,0 +1,116 @@
+.delimitation
+{
+    position: absolute;
+    width: 22.5%;
+    height: 100%;
+
+    left: 0;
+    margin: auto;
+
+}
+
+.container
+{
+    position: absolute;
+    height: 68%;
+    width: 80%;
+
+    top: 9%;
+    right: 0;
+    left: 0;
+    margin: auto;
+}
+
+h4
+{
+    position: absolute;
+    width: 100%;
+    height: 9%;
+
+    padding-top: 5%;
+    padding-left: 28%;
+    font-size: larger;
+    color: white;
+    font-weight: normal;
+}
+
+img
+{
+    position: absolute;
+    filter: invert(1);
+    height: 42%;
+
+    bottom: 30%;
+    right: 28%;
+    margin: auto;
+
+    opacity: 70%;
+}
+
+img:hover
+{
+    cursor: pointer;
+    opacity: 100%;
+}
+
+ul
+{
+    position: absolute;
+    height: 90%;
+    width: 100%;
+    
+    top: 10%;
+    list-style: none;
+}
+
+li
+{
+    position: relative;
+    width: 80%;
+    height: 6%;
+    border-radius: 5px;
+
+    right: 0;
+    left: 0;
+    margin: auto;
+    margin-top: 6%;
+
+    border: solid rgb(255, 255, 255, .0) 1px;
+    font-size: medium;
+    padding-left: 10%;
+    padding-top: 2%;
+    color: rgb(255, 255, 255, .7);
+}
+
+li:hover
+{
+    cursor: pointer;
+    border: none;
+    color: black;
+    background-color: rgb(255, 255, 255, .8);
+}
+
+button
+{
+    position: absolute;
+    background: none;
+    border: none;
+    height: 100%;
+    width: 10%;
+
+    top: 0;
+    bottom: 0;
+    right: 10%;
+    margin: auto;
+
+    font-size: larger;
+    font-weight: bold;
+    opacity: 50%;
+}
+
+button:hover
+{
+    opacity: 100%;
+    cursor: pointer;
+    text-shadow: 0px 0px 4px rgba(0, 0, 0, .2);
+}

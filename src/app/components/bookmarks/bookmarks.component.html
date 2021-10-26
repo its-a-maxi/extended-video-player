@@ -1,0 +1,10 @@
+<div class="delimitation">
+    <div class="container">
+        <h4 (click)="showBookmarks = !showBookmarks">{{showBookmarks ? 'Close Bookmarks' : 'Show Bookmarks'}}</h4>
+        <ul *ngIf="showBookmarks">
+            <li *ngFor="let item of bookmarks" (click)="currentVideoURLChange.emit(item)">{{item}}
+                <button title="Delete entry" (click)="removeURLBookmarks(item)">x</button>
+            </li>
+        </ul>
+    </div>
+</div>

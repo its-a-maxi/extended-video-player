@@ -1,0 +1,11 @@
+<div class="delimitation">
+    <div class="videoScreen">
+        <p>No video selected</p>
+        <iframe *ngIf="currentVideoURL != ''"
+            [src]="URL">
+        </iframe>
+    </div>
+    <img *ngIf="currentVideoURL != ''"
+        [src]="isInBookmarks ? '/assets/icons/star-filled.svg' : '/assets/icons/star-empty.svg'"
+        alt="Bookmark" title="Save" (click)="updateBookmarks()">
+</div>
