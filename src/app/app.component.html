@@ -4,26 +4,38 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Video Player</title>
+  <title>App Component</title>
 
 </head>
 <body>
+  <!-- div used for background -->
   <div class="background">
+    <!-- SNACKBAR ADAPTED FROM W3SCHOOLS - https://www.w3schools.com/howto/howto_js_snackbar.asp -->
+    <div id="snackbar">Bookmarks: {{numberOfBookmarksOnLoad}}</div>
+    <!-- Every component its inside this container -->
     <div class="container">
+      <!-- search-bar component, the current video id is passed to be
+        shown as placeholder and its output changes the video displayed -->
       <app-search-bar
         [currentVideoURL]="currentVideoURL"
         (currentVideoURLChange)="changeVideoURL($event)">
       </app-search-bar>
+      <!-- video-view component, the current video id is passed to display
+        the video and its outputs adds/removes the video id from bookmarks -->
       <app-video-view
         [currentVideoURL]="currentVideoURL"
         (bookmarkVideo)="bookmarkVideo($event)"
         (unmarkVideo)="unmarkVideo($event)">
       </app-video-view>
+      <!-- history component, its output changes the video displayed -->
       <app-history
         (currentVideoURLChange)="changeVideoURL($event)">
       </app-history>
+      <!-- bookmarks component, one of its outputs changes the video
+        displayed, the other one is used to show the sanckbar at load -->
       <app-bookmarks
-      (currentVideoURLChange)="changeVideoURL($event)">
+        (currentVideoURLChange)="changeVideoURL($event)"
+        (numberOfBookmarksOnLoad)="showSnackbar($event)">
       </app-bookmarks>
     </div>
   </div>

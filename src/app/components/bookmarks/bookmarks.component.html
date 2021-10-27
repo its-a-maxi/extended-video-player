@@ -1,8 +1,12 @@
 <div class="delimitation">
     <div class="container">
+        <!-- h4 is ussed as a button, updating button state and content on click -->
         <h4 (click)="showBookmarks = !showBookmarks">{{showBookmarks ? 'Close Bookmarks' : 'Show Bookmarks'}}</h4>
+        <!-- Shows list of bookmarks if button state is true -->
         <ul *ngIf="showBookmarks">
+            <!-- Each list entry can be clicked to update video displayed -->
             <li *ngFor="let item of bookmarks" (click)="currentVideoURLChange.emit(item)">{{item}}
+                <!-- Delete button which will remove entry from the list -->
                 <button title="Delete entry" (click)="removeURLBookmarks(item)">x</button>
             </li>
         </ul>

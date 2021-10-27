@@ -4,7 +4,7 @@
     position: fixed;
     height: 100vh;
     width: 100vw;
-    background-color: rgb(167, 70, 78);
+    background-color: rgb(184, 87, 95);
 }
 
 .container
@@ -28,5 +28,56 @@
         height: 50vw;
     }
 }
+
+
+/* SNACKBAR ADAPTED FROM W3SCHOOLS - https://www.w3schools.com/howto/howto_js_snackbar.asp */
+#snackbar {
+    position: fixed;
+    width: 10%;
+    height: 5%;
+    border-radius: 10px;
+
+    top: 6%;
+    right: 0;
+    left: 0;
+    margin: auto;
+
+    visibility: hidden;
+    background-color: rgba(0, 0, 0, .4);
+    color: rgba(255, 255, 255, .7);
+    font-size: large;
+    text-align: center;
+    padding: 0.8%;
+  }
+  
+  /* Show the snackbar when clicking on a button (class added with JavaScript) */
+  #snackbar.show {
+    visibility: visible; /* Show the snackbar */
+    /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
+    However, delay the fade out process for 2.5 seconds */
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  }
+  
+  /* Animations to fade the snackbar in and out */
+  @-webkit-keyframes fadein {
+    from {top: 0; opacity: 0;}
+    to {top: 6%; opacity: 1;}
+  }
+  
+  @keyframes fadein {
+    from {top: 0; opacity: 0;}
+    to {top: 6%; opacity: 1;}
+  }
+  
+  @-webkit-keyframes fadeout {
+    from {top: 6%; opacity: 1;}
+    to {top: 0; opacity: 0;}
+  }
+  
+  @keyframes fadeout {
+    from {top: 6%; opacity: 1;}
+    to {top: 0; opacity: 0;}
+  }
 
 

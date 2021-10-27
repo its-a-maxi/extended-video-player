@@ -1,10 +1,15 @@
 <div class="delimitation">
+    <!-- Empty video screen -->
     <div class="videoScreen">
         <p>No video selected</p>
+        <!-- iframe is hidden until a video is selected -->
         <iframe *ngIf="currentVideoURL != ''"
             [src]="URL">
         </iframe>
     </div>
+    <!-- Bookmark button is hidden until a video is selected -->
+    <!-- Button state depends on <isInBookmarks>, on click video
+        is added/removed to bookmarks -->
     <img *ngIf="currentVideoURL != ''"
         [src]="isInBookmarks ? '/assets/icons/star-filled.svg' : '/assets/icons/star-empty.svg'"
         alt="Bookmark" title="Save" (click)="updateBookmarks()">

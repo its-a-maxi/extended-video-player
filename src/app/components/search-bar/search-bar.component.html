@@ -1,7 +1,10 @@
 <div class="delimitation">
     <div class="searchBar">
+        <!-- Search bar is a form that will run search() at submit trigger -->
         <form (ngSubmit)="search()">
+            <!-- Text input, shows current video id as placeholder -->
             <input type="text" name='videoURL' [placeholder]="currentVideoURL != '' ? currentVideoURL : 'Youtube URL'" [(ngModel)]="videoURL">
+            <!-- Submit button -->
             <button type="submit">></button>
         </form>
     </div>
