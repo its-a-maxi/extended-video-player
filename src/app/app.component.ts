@@ -17,7 +17,7 @@ export class AppComponent {
   // Its used to show number of bookmnarks at aplication load
   numberOfBookmarksOnLoad: number = 0;
 
-  // Declaring child components to be able to call to their functions
+  // Declaring child components to be able to call their functions
   @ViewChild(HistoryComponent) private videoHistory?: HistoryComponent;
   @ViewChild(BookmarksComponent) private bookmarks?: BookmarksComponent;
   @ViewChild(VideoViewComponent) private videoView?: VideoViewComponent;
