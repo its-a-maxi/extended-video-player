@@ -48,6 +48,13 @@ The history and the bookmarks should be saved on local storage.
 <!-- USAGE EXAMPLES -->
 ## ⌨️ Usage
 
+* Navigate to the project folder
+
+* Install npm
+```sh
+  npm install
+```
+
 * To deploy production app:
   * Build the app
   ```sh
@@ -55,7 +62,7 @@ The history and the bookmarks should be saved on local storage.
   ```
   * Deploy the app
   ```sh
-    <simple server deployment> /dist/angular-video-player/.
+    <simple server deployment> dist/angular-video-player/.
   ```
   
 * To use development mode:
