@@ -58,7 +58,7 @@ The history and the bookmarks should be saved on local storage.
     <simple server deployment> /dist/angular-video-player/.
   ```
   
- * To use development mode:
+* To use development mode:
   * Deploy the app
   ```sh
     ng serve
