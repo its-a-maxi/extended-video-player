@@ -15,10 +15,10 @@
 <!-- ABOUT THE PROJECT -->
 ## ℹ️ About The Project
 
-Front-end excersice, you should create a page with angular capable of displaying youtube videos, with an history of viewed videos and a bookmark system.
+Front-end exercise, you should create a page with angular capable of displaying youtube videos, with an history of viewed videos and a bookmark system.
 The history and the bookmarks should be saved on local storage.
 
-### Excersice
+### Exercise
 <img src="https://cdn.discordapp.com/attachments/651878762329276418/903022377158471780/unknown.png" />
 
 ### Built With
