@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { HistoryService } from 'src/app/services/history/history.service';
 
 @Component({
   selector: 'app-history',
@@ -7,7 +8,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 })
 export class HistoryComponent implements OnInit {
 
-  constructor() { }
+  constructor(private historyService: HistoryService) { }
 
   // Array of strings, all the bookmarks will be stored here
   videoHistory: string[] = [];
@@ -18,13 +19,20 @@ export class HistoryComponent implements OnInit {
   // Runs at component load
   ngOnInit(): void
   {
-    // Gets "videoHistory" JSON stored in the local storage
-    let temp = localStorage.getItem("videoHistory");
+    this.getHistory();
+    // // Gets "videoHistory" JSON stored in the local storage
+    // let temp = localStorage.getItem("videoHistory");
 
-    // If "videoHistory" existed in local storage its content will
-    // be parsed and saved on <videoHistory>
-    if (temp)
-      this.videoHistory = JSON.parse(temp);
+    // // If "videoHistory" existed in local storage its content will
+    // // be parsed and saved on <videoHistory>
+    // if (temp)
+    //   this.videoHistory = JSON.parse(temp);
+  }
+
+  getHistory(): void
+  {
+    this.historyService.getHistory()
+        .subscribe(history => this.videoHistory = history);
   }
 
   updateHistory(videoURL: string): void
