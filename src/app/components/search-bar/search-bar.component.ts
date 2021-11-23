@@ -18,7 +18,9 @@ export class SearchBarComponent implements OnInit {
   // When the video is changed this variable is updated with its id
   currentVideo = "";
 
+  // Runs on component load
   ngOnInit(): void {
+    // Subscribes <videoURL> to currentVideoService Behaviour Subject
     this.currentVideoService.videoURL.subscribe(video => this.currentVideo = video);
   }
 
@@ -32,7 +34,7 @@ export class SearchBarComponent implements OnInit {
       return (null);
  }
 
-  // Executed at searchbar submit trigger
+  // Executed on searchbar submit
   search()
   {
     // Runs video URL parser and saves its return value in a variable

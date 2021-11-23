@@ -18,45 +18,27 @@ export class BookmarksComponent implements OnInit {
   // Button state
   showBookmarks: boolean = false;
 
-  // Toggles video change function in App-component
-  @Output() currentVideoURLChange = new EventEmitter<string>();
-
-  // Toggles snackbar function in App-component
-  @Output() numberOfBookmarksOnLoad = new EventEmitter<number>();
-
   // Runs at component load
   ngOnInit(): void
   {
     this.getBookmarks();
-
-    // Emits output of <numberOfBookmarksOnLoad> which will show a snackbar
-    this.numberOfBookmarksOnLoad.emit(this.bookmarks?.length);
   }
 
+  // Calls getBookmarks() from the BookmarksService service and initializes <bookmarks>
   getBookmarks(): void
   {
     this.bookmarksService.getBookmarks()
       .subscribe(bookmarks => this.bookmarks = bookmarks);
   }
 
-  updateBookmarks(videoURL: string): void
-  {
-    this.bookmarksService.addBookmark(videoURL)
-      .subscribe(bookmarks => this.bookmarks = bookmarks);
-  }
-
-  clearBookmarks(): void
-  {
-    this.bookmarksService.clearBookmarks()
-      .subscribe(bookmarks => this.bookmarks = bookmarks);
-  }
-
+  // Calls removeBookmark() from the BookmarksService service
   removeURLBookmarks(videoURL: string)
   {
     this.bookmarksService.removeBookmark(videoURL)
-      .subscribe(bookmarks => this.bookmarks = bookmarks);
+      .subscribe();
   }
 
+  // Calls changeVideoURL() from the CurrentVideoService service
   changeCurrentVideo(videoURL: string)
   {
     this.currentVideoService.changeVideoURL(videoURL);

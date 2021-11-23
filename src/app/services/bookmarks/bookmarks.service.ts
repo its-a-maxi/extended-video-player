@@ -1,65 +1,89 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookmarksService {
 
-  bookmarks: string[] = [];
+  // A BehaviorSubject which will save al data from the bookmarks is created
+  bookmarks: BehaviorSubject<string[]>;
 
-  constructor() {
-    // Gets "bookmarks" JSON stored in the local storage
+  constructor()
+  {
+    // Initializes the BehaviourSubject empty
+    let emptyString: string[] = [];
+    this.bookmarks = new BehaviorSubject(emptyString);
+    // If some data were already stored in localStorage the BehaviourSubject ill be updated
     let temp = localStorage.getItem("bookmarks");
-
-    // If "bookmarks" existed in local storage its content will
-    // be parsed and saved on <bookmarks>
     if (temp)
-      this.bookmarks = JSON.parse(temp);
+      this.bookmarks = new BehaviorSubject(JSON.parse(temp));
   }
 
+  // Returns the BehaviourSubject observable, which contents all the bookmarks
   getBookmarks(): Observable<string[]>
   {
-    return (of(this.bookmarks));
+    return (this.bookmarks.asObservable());
   }
 
+  // Adds a new bookmark to the bookmarks list
   addBookmark(videoURL: string): Observable<string[]>
   {
-    this.bookmarks.push(videoURL);
+    // Pushes the new bookmark in the list
+    let bookmarksValue: string[] = this.bookmarks.value;
+    bookmarksValue.push(videoURL);
+    // Updates the BehaviourSubject with the updated list
+    this.bookmarks.next(bookmarksValue);
 
-    // Transforms the array to JSON and updates it in local storages
-    localStorage.setItem("bookmarks", JSON.stringify(this.bookmarks));
+    // Saves the updated list in the localStorage
+    localStorage.setItem("bookmarks", JSON.stringify(bookmarksValue));
 
-    return (of(this.bookmarks))
+    return (this.bookmarks.asObservable());
   }
 
+  // Removes all bookmarks from the bookmarks list
   clearBookmarks(): Observable<string[]>
   {
-    // Clears <bookmarks>, leaving it empty
-    this.bookmarks = [];
+    // Updates the behaviourSubject with an empty list
+    this.bookmarks.next([]);
 
-    // Removes "bookmarks" from local storage so its no longer stored
+    // Removes the bookmarks data stored in localStorage
     localStorage.removeItem("bookmarks");
 
-    return (of(this.bookmarks));
+    return (this.bookmarks.asObservable());
   }
 
+  // Removes an specific video from the bookmarks list
   removeBookmark(videoURL: string)
   {
-    // Search index number of the pased video id in <bookmarks>
-    let index: number = this.bookmarks.findIndex(value => value == videoURL);
+    // Search index number of the pased video id in <bookmarks> and
+    // removes video URL from <bookmarks>, replacing the array
+    // with a new one without the video URL
+    let bookmarksValue: string[] = this.bookmarks.value;
+    bookmarksValue.splice(bookmarksValue.findIndex(value => value == videoURL), 1);
+    // Updates the BehaviourSubject with the updated list
+    this.bookmarks.next(bookmarksValue);
 
-    // Checks if the index is positive, meaning the video URL is inside the <bookmarks> array
-    if (index >= 0)
-    {
-      // Removes video URL from <bookmarks>, replacing the array
-      // with a new one without the video URL
-      this.bookmarks.splice(index, 1);
+    // Saves the updated list in the localStorage
+    localStorage.setItem("bookmarks", JSON.stringify(bookmarksValue));
 
-      // Transforms the array to JSON and updates it in local storages
-      localStorage.setItem("bookmarks", JSON.stringify(this.bookmarks));
-    }
+    return (this.bookmarks.asObservable());
+  }
 
-    return (of(this.bookmarks))
+  // Returns length of the bookmarks list
+  numberOfBookmarks(): Observable<number>
+  {
+    let bookmarksValue: string[] = this.bookmarks.value;
+
+    return (of(bookmarksValue.length));
+  }
+
+  // Checks if the passed video exist in the bookmarks list
+  isInBookmarks(videoURL: string): Observable<boolean>
+  {
+    let bookmarksValue: string[] = this.bookmarks.value;
+    if (bookmarksValue.find(value => value == videoURL))
+      return (of(true));
+    return (of(false));
   }
 }

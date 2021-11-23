@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -7,59 +7,67 @@ import { Observable, of } from 'rxjs';
 
 export class HistoryService {
 
-  history: string[] = [];
+  // A BehaviorSubject which will save al data from the history is created
+  history: BehaviorSubject<string[]>;
 
   constructor()
   {
+    // Initializes the BehaviourSubject empty
+    let emptyArray: string[] = [];
+    this.history = new BehaviorSubject(emptyArray);
+    // If some data were already stored in localStorage the BehaviourSubject ill be updated
     let temp = localStorage.getItem("videoHistory");
     if (temp)
-      this.history = JSON.parse(temp);
+      this.history.next(JSON.parse(temp));
   }
 
+  // Returns the BehaviourSubject observable, which contents the video history
   getHistory() : Observable<string[]>
   {
-      return (of(this.history));
+      return (this.history.asObservable());
   }
 
+  // Adds a new video to the history list
   addVideoURL(videoURL: string): Observable<string[]>
   {
-    // Code to avoid duplicates:
-      // A new array will be created without duplicates of video URL
-      let temp = this.history.filter(value => value != videoURL);
-      console.log(temp);
-      // The new array will be assigned to <videoHistory>
-      this.history = temp;
-
-    // Adds new video id to <videoHistory>
-    this.history.push(videoURL);
+    // Pushes the new video in the list
+    let historyValue: string[] = this.history.value.filter(value => value != videoURL);
+    historyValue.push(videoURL);
+    // Updates the BehaviourSubject with the updated list
+    this.history.next(historyValue);
     
-    // Transforms the array to JSON and updates it in local storages
-    localStorage.setItem("videoHistory", JSON.stringify(this.history));
+    // Saves the updated list in the localStorage
+    localStorage.setItem("videoHistory", JSON.stringify(historyValue));
 
-    return (of(this.history));
+    return (this.history.asObservable());
   }
 
+  // Removes all videos from the history
   clearHistory(): Observable<string[]>
   {
-    // Clears <videoHistory>, leaving it empty
-    this.history = [];
+    // Updates the behaviourSubject with an empty list
+    this.history.next([]);
 
-    // Removes "videoHistory" from local storage so its no longer stored
+    // Removes the bookmarks data stored in localStorage
     localStorage.removeItem("videoHistory");
 
-    return (of(this.history));
+    return (this.history.asObservable());
   }
 
+  // Removes an specific video from the history
   removeVideoURL(videoURL: string): Observable<string[]>
   {
-    // Search index number of the pased video id in <bookmarks> and
-    // removes video URL from <bookmarks>, replacing the array
-    // with a new one without the video URL
-    this.history.splice(this.history.findIndex(value => value == videoURL), 1);
+    // Search index number of the pased video id in <history> and
+    // removes the video from <history>, replacing the array
+    // with a new one without the video.
+    let historyValue: string[] = this.history.value;
+    historyValue.splice(historyValue.findIndex(value => value == videoURL), 1);
+    // Updates the BehaviourSubject with the updated list
+    this.history.next(historyValue);
 
-    // Transforms the array to JSON and updates it in local storages
-    localStorage.setItem("videoHistory", JSON.stringify(this.history));
+    // Saves the updated list in the localStorage
+    localStorage.setItem("videoHistory", JSON.stringify(historyValue));
 
-    return (of(this.history))
+    return (this.history.asObservable());
   }
 }

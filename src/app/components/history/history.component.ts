@@ -14,9 +14,6 @@ export class HistoryComponent implements OnInit {
 
   // Array of strings, all the bookmarks will be stored here
   videoHistory: string[] = [];
-  
-  // Toggles video change function in App-component
-  @Output() currentVideoURLChange = new EventEmitter<string>();
 
   // Runs at component load
   ngOnInit(): void
@@ -24,30 +21,35 @@ export class HistoryComponent implements OnInit {
     this.getHistory();
   }
 
+  // Calls getHistory() from the historyService service and initializes <videoHistory>
   getHistory(): void
   {
     this.historyService.getHistory()
         .subscribe(history => this.videoHistory = history);
   }
 
+  // Calls updateHistory() from the historyService service
   updateHistory(videoURL: string): void
   {
     this.historyService.addVideoURL(videoURL)
-        .subscribe(history => this.videoHistory = history);
+        .subscribe();
   }
 
+  // Calls clearHistory() from the historyService service
   clearHistory(): void
   {
     this.historyService.clearHistory()
-        .subscribe(history => this.videoHistory = history);
+        .subscribe();
   }
 
+  // Calls removeVideoURL() from the historyService service
   removeURLHistory(videoURL: string)
   {
     this.historyService.removeVideoURL(videoURL)
-        .subscribe(history => this.videoHistory = history);
+        .subscribe();
   }
 
+  // Calls changeVideoURL() from the currentVideoService service
   changeCurrentVideo(videoURL: string)
   {
     this.currentVideoService.changeVideoURL(videoURL);

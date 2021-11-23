@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output, OnChanges, SimpleChanges, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { BehaviorSubject } from 'rxjs';
 import { CurrentVideoService } from 'src/app/services/currentVideo/current-video.service';
+import { BookmarksService } from 'src/app/services/bookmarks/bookmarks.service';
 
 @Component({
   selector: 'app-video-view',
@@ -10,81 +10,45 @@ import { CurrentVideoService } from 'src/app/services/currentVideo/current-video
 })
 export class VideoViewComponent implements OnInit {
 
-  constructor(public sanitizer:DomSanitizer, private currentVideoService: CurrentVideoService) { 
+  constructor(public sanitizer:DomSanitizer,
+      private currentVideoService: CurrentVideoService,
+      private bookmarksService: BookmarksService) { 
   }
 
   // Bookmark button state
   isInBookmarks: boolean = false;
 
-  // URL for the youtube video is stored here
+  // The siplayable URL of the youtube video is stored here
   URL: any = '';
 
+  // The URL / ID of the video is saved in this variable
   currentVideo: string = "";
 
-  // Gets the video id from App-component
-  @Input() currentVideoURL: string = "";
-
-  // Toggles bookmark a video function in App-component
-  @Output() bookmarkVideo = new EventEmitter<string>();
-  
-  // Toggles unmark a video function in App-component
-  @Output() unmarkVideo = new EventEmitter<string>();
-
-
+  // Runs at component load
   ngOnInit(): void {
+    // Various variables will be subscribed to the BehaviourSubject of currentVideoService
+    // so they will be updated each time the URL changes.
     this.currentVideoService.videoURL.subscribe(video => this.currentVideo = video);
+    // The <URL> is formulated from the basic URL/ID of the video.
     this.currentVideoService.videoURL.subscribe(video => this.URL = this.sanitizer.bypassSecurityTrustResourceUrl('//www.youtube.com/embed/' + video));
+    // Checks if the video is bookmarked or not
+    this.currentVideoService.videoURL.subscribe(video => this.bookmarksService.isInBookmarks(video).subscribe(value => this.isInBookmarks = value));
   }
-
-  private checkBookmarks(): boolean
-  {
-    // Creates a variable were bookmarks will be stored
-    let bookmarks: string[];
-
-    // Gets "bookmarks" from local storage
-    let temp = localStorage.getItem("bookmarks");
-
-    // Checks if "bookmarks" exists in local storage
-    if (temp)
-    {
-      // Saves parsed "bookmarks" on <bookmarks>
-      bookmarks = JSON.parse(temp);
-
-      // Returns (true) if the video URL exists on <bookmarks>
-      if (bookmarks.find(value => value == this.currentVideoURL))
-        return (true);
-    }
-
-    // Returns (false) if the video URL doesn't exist in <bookmarks>
-    // or "bookmarks" doesn't exist in local storage
-    return (false);
-  }
-
-  // // Loads on any simple change of the component,
-  // // only on <currentVideoURL> changes in this case
-  // ngOnChanges(changes: SimpleChanges): void
-  // {
-  //   // Checks if the video is in bookmarks and changes
-  //   // the bookmark button state in consequence
-  //   this.isInBookmarks = this.checkBookmarks();
-
-  //   // Sanitize the URL to avoid errors
-  //   this.URL = this.sanitizer.bypassSecurityTrustResourceUrl('//www.youtube.com/embed/' + this.currentVideoURL);
-  // }
 
   // Runs when bookmark button is clicked
   updateBookmarks(): void
   {
-    // If the video isn't bookmarked the bookmarkVideo Output is emitted
-    if (!this.isInBookmarks)
-      this.bookmarkVideo.emit(this.currentVideoURL);
-      
-    // If the video is bookmarked the unmarkVideo Output is emitted
+    // Checks if the video is in bookmarks, if it is, the video will be eliminated from bookmarks
+    if (this.isInBookmarks)
+      this.bookmarksService.removeBookmark(this.currentVideo)
+        .subscribe();
+    // If the video is not in bookmarks the video will be added
     else
-      this.unmarkVideo.emit(this.currentVideoURL);
-
-    // Changes the bookmark button state
-    this.isInBookmarks = !this.isInBookmarks;
+      this.bookmarksService.addBookmark(this.currentVideo)
+        .subscribe();
+    // Changes the button state to its contrary
+    this.isInBookmarks = !this.isInBookmarks
   }
+
 
 }

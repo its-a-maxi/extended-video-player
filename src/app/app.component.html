@@ -16,21 +16,12 @@
     <div class="container">
       <!-- search-bar component -->
       <app-search-bar></app-search-bar>
-      <!-- video-view component, the current video id is passed to display
-        the video and its outputs adds/removes the video id from bookmarks -->
-      <app-video-view
-        [currentVideoURL]="currentVideoURL"
-        (bookmarkVideo)="bookmarkVideo($event)"
-        (unmarkVideo)="unmarkVideo($event)">
-      </app-video-view>
+      <!-- video-view component -->
+      <app-video-view></app-video-view>
       <!-- history component -->
       <app-history></app-history>
-      <!-- bookmarks component, one of its outputs changes the video
-        displayed, the other one is used to show the sanckbar at load -->
-      <app-bookmarks
-        (currentVideoURLChange)="changeVideoURL($event)"
-        (numberOfBookmarksOnLoad)="showSnackbar($event)">
-      </app-bookmarks>
+      <!-- bookmarks component -->
+      <app-bookmarks></app-bookmarks>
     </div>
   </div>
 </body>
