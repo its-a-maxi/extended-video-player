@@ -20,13 +20,6 @@ export class HistoryComponent implements OnInit {
   ngOnInit(): void
   {
     this.getHistory();
-    // // Gets "videoHistory" JSON stored in the local storage
-    // let temp = localStorage.getItem("videoHistory");
-
-    // // If "videoHistory" existed in local storage its content will
-    // // be parsed and saved on <videoHistory>
-    // if (temp)
-    //   this.videoHistory = JSON.parse(temp);
   }
 
   getHistory(): void
@@ -37,37 +30,20 @@ export class HistoryComponent implements OnInit {
 
   updateHistory(videoURL: string): void
   {
-    // Code to avoid duplicates:
-      // A new array will be created without duplicates of video URL
-      let temp = this.videoHistory.filter(value => value != videoURL);
-      // The new array will be assigned to <videoHistory>
-      this.videoHistory = temp;
-
-    // Adds new video id to <videoHistory>
-    this.videoHistory.push(videoURL);
-    
-    // Transforms the array to JSON and updates it in local storages
-    localStorage.setItem("videoHistory", JSON.stringify(this.videoHistory));
+    this.historyService.addVideoURL(videoURL)
+        .subscribe(history => this.videoHistory = history);
   }
 
   clearHistory(): void
   {
-    // Clears <videoHistory>, leaving it empty
-    this.videoHistory = [];
-
-    // Removes "videoHistory" from local storage so its no longer stored
-    localStorage.removeItem("videoHistory");
+    this.historyService.clearHistory()
+        .subscribe(history => this.videoHistory = history);
   }
 
   removeURLHistory(videoURL: string)
   {
-    // Search index number of the pased video id in <bookmarks> and
-    // removes video URL from <bookmarks>, replacing the array
-    // with a new one without the video URL
-    this.videoHistory.splice(this.videoHistory.findIndex(value => value == videoURL), 1);
-
-    // Transforms the array to JSON and updates it in local storages
-    localStorage.setItem("videoHistory", JSON.stringify(this.videoHistory));
+    this.historyService.removeVideoURL(videoURL)
+        .subscribe(history => this.videoHistory = history);
   }
 
 }
