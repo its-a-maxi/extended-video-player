@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { BookmarksService } from 'src/app/services/bookmarks/bookmarks.service';
+import { CurrentVideoService } from 'src/app/services/currentVideo/current-video.service';
 
 @Component({
   selector: 'app-bookmarks',
@@ -8,7 +9,8 @@ import { BookmarksService } from 'src/app/services/bookmarks/bookmarks.service';
 })
 export class BookmarksComponent implements OnInit {
 
-  constructor(private bookmarksService: BookmarksService) { }
+  constructor(private bookmarksService: BookmarksService,
+    private currentVideoService: CurrentVideoService) { }
 
   // Array of strings, all the bookmarks will be stored here
   bookmarks: string[] = [];
@@ -54,6 +56,10 @@ export class BookmarksComponent implements OnInit {
     this.bookmarksService.removeBookmark(videoURL)
       .subscribe(bookmarks => this.bookmarks = bookmarks);
   }
-  
 
+  changeCurrentVideo(videoURL: string)
+  {
+    this.currentVideoService.changeVideoURL(videoURL);
+  }
+  
 }

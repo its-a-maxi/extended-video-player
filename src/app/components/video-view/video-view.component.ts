@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, OnChanges, SimpleChanges, ChangeDetectorRef } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { BehaviorSubject } from 'rxjs';
+import { CurrentVideoService } from 'src/app/services/currentVideo/current-video.service';
 
 @Component({
   selector: 'app-video-view',
@@ -8,13 +10,16 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class VideoViewComponent implements OnInit {
 
-  constructor(public sanitizer:DomSanitizer) { }
+  constructor(public sanitizer:DomSanitizer, private currentVideoService: CurrentVideoService) { 
+  }
 
   // Bookmark button state
   isInBookmarks: boolean = false;
 
   // URL for the youtube video is stored here
-  URL: any;
+  URL: any = '';
+
+  currentVideo: string = "";
 
   // Gets the video id from App-component
   @Input() currentVideoURL: string = "";
@@ -27,6 +32,8 @@ export class VideoViewComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.currentVideoService.videoURL.subscribe(video => this.currentVideo = video);
+    this.currentVideoService.videoURL.subscribe(video => this.URL = this.sanitizer.bypassSecurityTrustResourceUrl('//www.youtube.com/embed/' + video));
   }
 
   private checkBookmarks(): boolean
@@ -53,17 +60,17 @@ export class VideoViewComponent implements OnInit {
     return (false);
   }
 
-  // Loads on any simple change of the component,
-  // only on <currentVideoURL> changes in this case
-  ngOnChanges(changes: SimpleChanges): void
-  {
-    // Checks if the video is in bookmarks and changes
-    // the bookmark button state in consequence
-    this.isInBookmarks = this.checkBookmarks();
+  // // Loads on any simple change of the component,
+  // // only on <currentVideoURL> changes in this case
+  // ngOnChanges(changes: SimpleChanges): void
+  // {
+  //   // Checks if the video is in bookmarks and changes
+  //   // the bookmark button state in consequence
+  //   this.isInBookmarks = this.checkBookmarks();
 
-    // Sanitize the URL to avoid errors
-    this.URL = this.sanitizer.bypassSecurityTrustResourceUrl('//www.youtube.com/embed/' + this.currentVideoURL);
-  }
+  //   // Sanitize the URL to avoid errors
+  //   this.URL = this.sanitizer.bypassSecurityTrustResourceUrl('//www.youtube.com/embed/' + this.currentVideoURL);
+  // }
 
   // Runs when bookmark button is clicked
   updateBookmarks(): void

@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { CurrentVideoService } from 'src/app/services/currentVideo/current-video.service';
 import { HistoryService } from 'src/app/services/history/history.service';
 
 @Component({
@@ -8,7 +9,8 @@ import { HistoryService } from 'src/app/services/history/history.service';
 })
 export class HistoryComponent implements OnInit {
 
-  constructor(private historyService: HistoryService) { }
+  constructor(private historyService: HistoryService,
+      private currentVideoService: CurrentVideoService) { }
 
   // Array of strings, all the bookmarks will be stored here
   videoHistory: string[] = [];
@@ -44,6 +46,11 @@ export class HistoryComponent implements OnInit {
   {
     this.historyService.removeVideoURL(videoURL)
         .subscribe(history => this.videoHistory = history);
+  }
+
+  changeCurrentVideo(videoURL: string)
+  {
+    this.currentVideoService.changeVideoURL(videoURL);
   }
 
 }

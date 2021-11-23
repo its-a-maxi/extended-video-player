@@ -9,7 +9,7 @@
         <!-- Shows history -->
         <ul>
             <!-- Each list entry can be clicked to update video displayed -->
-            <li *ngFor="let item of videoHistory" (click)="currentVideoURLChange.emit(item)">{{item}}
+            <li *ngFor="let item of videoHistory" (click)="changeCurrentVideo(item)">{{item}}
                 <!-- Delete button which will remove entry from the list -->
                 <button title="Delete entry" (click)="removeURLHistory(item)">x</button>
             </li>

@@ -5,7 +5,7 @@
         <!-- Shows list of bookmarks if button state is true -->
         <ul *ngIf="showBookmarks">
             <!-- Each list entry can be clicked to update video displayed -->
-            <li *ngFor="let item of bookmarks" (click)="currentVideoURLChange.emit(item)">{{item}}
+            <li *ngFor="let item of bookmarks" (click)="changeCurrentVideo(item)">{{item}}
                 <!-- Delete button which will remove entry from the list -->
                 <button title="Delete entry" (click)="removeURLBookmarks(item)">x</button>
             </li>

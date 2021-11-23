@@ -1,5 +1,6 @@
-import { ConditionalExpr } from '@angular/compiler';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { CurrentVideoService } from 'src/app/services/currentVideo/current-video.service';
 
 @Component({
   selector: 'app-search-bar',
@@ -8,19 +9,17 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class SearchBarComponent implements OnInit {
 
-  constructor() { }
+  constructor(private currentVideoService: CurrentVideoService) { }
 
   // Searchbar input is stored here
   videoURL: string = "";
 
   // If nothing is written in the searchbar this variable will be showed
   // When the video is changed this variable is updated with its id
-  @Input() currentVideoURL: string = "";
-
-  // Toggles video change function in App-component
-  @Output() currentVideoURLChange = new EventEmitter<string>();
+  currentVideo = "";
 
   ngOnInit(): void {
+    this.currentVideoService.videoURL.subscribe(video => this.currentVideo = video);
   }
 
   // Youtube video URL id parser from -> https://stackoverflow.com/questions/21607808/convert-a-youtube-video-url-to-embed-code/21607897
@@ -41,7 +40,7 @@ export class SearchBarComponent implements OnInit {
 
     // If the parser returns a valid URL the video will be changed
     if (videoId)
-      this.currentVideoURLChange.emit(videoId);
+      this.currentVideoService.changeVideoURL(videoId)
     // If the parser returns an invalid URL an alert is shown
     else
       alert("Incorrect URL");
