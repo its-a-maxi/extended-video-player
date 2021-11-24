@@ -16,13 +16,13 @@ import { BookmarksComponent } from './components/bookmarks/bookmarks.component';
     SearchBarComponent,
     VideoViewComponent,
     HistoryComponent,
-    BookmarksComponent,
-    HttpClientModule
+    BookmarksComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

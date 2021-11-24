@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BookmarksService } from 'src/app/services/bookmarks/bookmarks.service';
 import { CurrentVideoService } from 'src/app/services/currentVideo/current-video.service';
 
@@ -21,14 +21,8 @@ export class BookmarksComponent implements OnInit {
   // Runs at component load
   ngOnInit(): void
   {
-    this.getBookmarks();
-  }
-
-  // Calls getBookmarks() from the BookmarksService service and initializes <bookmarks>
-  getBookmarks(): void
-  {
-    this.bookmarksService.getBookmarks()
-      .subscribe(bookmarks => this.bookmarks = bookmarks);
+    // Subscribes <bookmarks> to bookmark$ observable
+    this.bookmarksService.bookmarks$.subscribe(bookmarks => {this.bookmarks = bookmarks})
   }
 
   // Calls removeBookmark() from the BookmarksService service

@@ -7,50 +7,45 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 export class BookmarksService {
 
   // A BehaviorSubject which will save al data from the bookmarks is created
-  bookmarks: BehaviorSubject<string[]>;
+  // Initializes the BehaviourSubject empty
+  private bookmarksSource = new BehaviorSubject<string[]>([]);
+
+  // An observable of the behaviourSubject is declared
+  public bookmarks$ = this.bookmarksSource.asObservable();
 
   constructor()
   {
-    // Initializes the BehaviourSubject empty
-    let emptyString: string[] = [];
-    this.bookmarks = new BehaviorSubject(emptyString);
     // If some data were already stored in localStorage the BehaviourSubject ill be updated
     let temp = localStorage.getItem("bookmarks");
     if (temp)
-      this.bookmarks = new BehaviorSubject(JSON.parse(temp));
-  }
-
-  // Returns the BehaviourSubject observable, which contents all the bookmarks
-  getBookmarks(): Observable<string[]>
-  {
-    return (this.bookmarks.asObservable());
+      this.bookmarksSource.next(JSON.parse(temp));
   }
 
   // Adds a new bookmark to the bookmarks list
   addBookmark(videoURL: string): Observable<string[]>
   {
     // Pushes the new bookmark in the list
-    let bookmarksValue: string[] = this.bookmarks.value;
+    let bookmarksValue: string[] = this.bookmarksSource.value;
     bookmarksValue.push(videoURL);
     // Updates the BehaviourSubject with the updated list
-    this.bookmarks.next(bookmarksValue);
+    this.bookmarksSource.next(bookmarksValue);
 
     // Saves the updated list in the localStorage
     localStorage.setItem("bookmarks", JSON.stringify(bookmarksValue));
 
-    return (this.bookmarks.asObservable());
+    return (this.bookmarks$);
   }
 
   // Removes all bookmarks from the bookmarks list
   clearBookmarks(): Observable<string[]>
   {
     // Updates the behaviourSubject with an empty list
-    this.bookmarks.next([]);
+    this.bookmarksSource.next([]);
 
     // Removes the bookmarks data stored in localStorage
     localStorage.removeItem("bookmarks");
 
-    return (this.bookmarks.asObservable());
+    return (this.bookmarks$);
   }
 
   // Removes an specific video from the bookmarks list
@@ -59,31 +54,31 @@ export class BookmarksService {
     // Search index number of the pased video id in <bookmarks> and
     // removes video URL from <bookmarks>, replacing the array
     // with a new one without the video URL
-    let bookmarksValue: string[] = this.bookmarks.value;
+    let bookmarksValue: string[] = this.bookmarksSource.value;
     bookmarksValue.splice(bookmarksValue.findIndex(value => value == videoURL), 1);
     // Updates the BehaviourSubject with the updated list
-    this.bookmarks.next(bookmarksValue);
+    this.bookmarksSource.next(bookmarksValue);
 
     // Saves the updated list in the localStorage
     localStorage.setItem("bookmarks", JSON.stringify(bookmarksValue));
 
-    return (this.bookmarks.asObservable());
+    return (this.bookmarks$);
   }
 
   // Returns length of the bookmarks list
   numberOfBookmarks(): Observable<number>
   {
-    let bookmarksValue: string[] = this.bookmarks.value;
+    let bookmarksValue: string[] = this.bookmarksSource.value;
 
     return (of(bookmarksValue.length));
   }
 
   // Checks if the passed video exist in the bookmarks list
-  isInBookmarks(videoURL: string): Observable<boolean>
+  isInBookmarks(videoURL: string): boolean
   {
-    let bookmarksValue: string[] = this.bookmarks.value;
+    let bookmarksValue: string[] = this.bookmarksSource.value;
     if (bookmarksValue.find(value => value == videoURL))
-      return (of(true));
-    return (of(false));
+      return (true);
+    return (false);
   }
 }

@@ -21,7 +21,7 @@ export class SearchBarComponent implements OnInit {
   // Runs on component load
   ngOnInit(): void {
     // Subscribes <videoURL> to currentVideoService Behaviour Subject
-    this.currentVideoService.videoURL.subscribe(video => this.currentVideo = video);
+    this.currentVideoService.videoURL$.subscribe(video => this.currentVideo = video);
   }
 
   // Youtube video URL id parser from -> https://stackoverflow.com/questions/21607808/convert-a-youtube-video-url-to-embed-code/21607897

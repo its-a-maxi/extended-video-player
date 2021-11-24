@@ -8,12 +8,14 @@ import { HistoryService } from '../history/history.service';
 export class CurrentVideoService {
 
   // Declares a behaviourSubject where the current video URL will be saved
-  videoURL: BehaviorSubject<string>;
+  // The BehaviourSubject Is initialized empty
+  private videoURLSource = new BehaviorSubject("");
+
+  // An observable of the behaviourSubject is declared
+  public videoURL$ = this.videoURLSource.asObservable();
 
   constructor(private historyService: HistoryService)
   {
-    // The BehaviourSubject Is initialized empty
-    this.videoURL = new BehaviorSubject("")
   }
 
   // Changes the current video to the new one passed
@@ -22,6 +24,6 @@ export class CurrentVideoService {
     // Adds the new video to the history
     this.historyService.addVideoURL(videoURL);
     // Updates the BehaviourSubject
-    this.videoURL.next(videoURL);
+    this.videoURLSource.next(videoURL);
   }
 }

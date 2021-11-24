@@ -18,14 +18,8 @@ export class HistoryComponent implements OnInit {
   // Runs at component load
   ngOnInit(): void
   {
-    this.getHistory();
-  }
-
-  // Calls getHistory() from the historyService service and initializes <videoHistory>
-  getHistory(): void
-  {
-    this.historyService.getHistory()
-        .subscribe(history => this.videoHistory = history);
+    // Subscribes <bookmarks> to bookmark$ observable
+    this.historyService.history$.subscribe(history => {this.videoHistory = history})
   }
 
   // Calls updateHistory() from the historyService service

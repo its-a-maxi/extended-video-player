@@ -28,11 +28,13 @@ export class VideoViewComponent implements OnInit {
   ngOnInit(): void {
     // Various variables will be subscribed to the BehaviourSubject of currentVideoService
     // so they will be updated each time the URL changes.
-    this.currentVideoService.videoURL.subscribe(video => this.currentVideo = video);
-    // The <URL> is formulated from the basic URL/ID of the video.
-    this.currentVideoService.videoURL.subscribe(video => this.URL = this.sanitizer.bypassSecurityTrustResourceUrl('//www.youtube.com/embed/' + video));
-    // Checks if the video is bookmarked or not
-    this.currentVideoService.videoURL.subscribe(video => this.bookmarksService.isInBookmarks(video).subscribe(value => this.isInBookmarks = value));
+    this.currentVideoService.videoURL$.subscribe(video => {
+      this.currentVideo = video;
+      // The <URL> is formulated from the basic URL/ID of the video.
+      this.URL = this.sanitizer.bypassSecurityTrustResourceUrl('//www.youtube.com/embed/' + video);
+      // Checks if the video is bookmarked or not
+      this.isInBookmarks = this.bookmarksService.isInBookmarks(video);
+    });
   }
 
   // Runs when bookmark button is clicked
