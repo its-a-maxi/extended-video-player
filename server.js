@@ -19,14 +19,12 @@ app.listen(8000, () => {
 })
 
 app.route('/api/bookmarks').get((req, res) => {
-    res.send({
-        bookmarks: [{ videoURL:"B19_G1guNDk" }, { videoURL: "gset79KMmt0" }]
-    })
+    res.send(["B19_G1guNDk", "gset79KMmt0"])
 })
 
 app.route('/api/bookmarks/:videoURL').get((req, res) => {
     const requestedVideoURL = req.params['videoURL']
-    res.send({ name: requestedVideoURL })
+    res.send({ videoURL: requestedVideoURL })
   })
 
 app.route('/api/bookmarks').post((req, res) => {

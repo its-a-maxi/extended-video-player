@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BookmarksService } from 'src/app/services/bookmarks/bookmarks.service';
+import { Bookmark, BookmarksService } from 'src/app/services/bookmarks/bookmarks.service';
 import { CurrentVideoService } from 'src/app/services/currentVideo/current-video.service';
 
 @Component({

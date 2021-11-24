@@ -1,5 +1,11 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+
+export interface Bookmark
+{
+  videoURl: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -13,12 +19,17 @@ export class BookmarksService {
   // An observable of the behaviourSubject is declared
   public bookmarks$ = this.bookmarksSource.asObservable();
 
-  constructor()
+  private aSource = new BehaviorSubject<Bookmark[]>([]);
+  public a$ = this.aSource.asObservable();
+
+  constructor(private http: HttpClient)
   {
     // If some data were already stored in localStorage the BehaviourSubject ill be updated
     let temp = localStorage.getItem("bookmarks");
     if (temp)
       this.bookmarksSource.next(JSON.parse(temp));
+    
+    this.http.get<string[]>('http://localhost:8000/api/bookmarks').subscribe(bookmarks => {this.bookmarksSource.next(bookmarks)})
   }
 
   // Adds a new bookmark to the bookmarks list
