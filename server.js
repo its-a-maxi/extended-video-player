@@ -69,6 +69,47 @@ MongoClient.connect('mongodb+srv://root:Password@cluster0.cdajx.mongodb.net/myFi
         })
         .catch(error => console.error(error))
     })
+
+
+    // CRUD FOR HISTORY
+
+    // The DB collection for history is returned
+    app.route('/history').get((req, res) => {
+        historyCollection.find().toArray()
+        .then(results => {
+            console.log(results)
+            res.send(results)
+        })
+        .catch(error => console.error(error))
+    })
+
+    // A new history entry is added to the DB
+    app.route('/history').post((req, res) => {
+        historyCollection.insertOne(req.body)
+        .then(result => {
+            console.log(result)
+        })
+        .catch(error => console.error(error))
+    })
+
+    // The history is removed from the database
+    app.route('/history').delete((req, res) => {
+        historyCollection.deleteMany({})
+        .then(result => {
+            console.log(result)
+        })
+        .catch(error => console.error(error))
+    })
+
+    // The provided video is removed from the history
+    app.route('/history/:videoURL').delete((req, res) => {
+        const requestedVideoURL = {videoURL : req.params['videoURL']}
+        historyCollection.deleteOne(requestedVideoURL)
+        .then(result => {
+            console.log(result)
+        })
+        .catch(error => console.error(error))
+    })
   })
 
   

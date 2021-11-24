@@ -1,6 +1,6 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CurrentVideoService } from 'src/app/services/currentVideo/current-video.service';
-import { HistoryService } from 'src/app/services/history/history.service';
+import { HistoryEntry, HistoryService } from 'src/app/services/history/history.service';
 
 @Component({
   selector: 'app-history',
@@ -13,7 +13,7 @@ export class HistoryComponent implements OnInit {
       private currentVideoService: CurrentVideoService) { }
 
   // Array of strings, all the bookmarks will be stored here
-  videoHistory: string[] = [];
+  videoHistory: HistoryEntry[] = [];
 
   // Runs at component load
   ngOnInit(): void

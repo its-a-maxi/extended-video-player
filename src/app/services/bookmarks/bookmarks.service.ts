@@ -28,7 +28,9 @@ export class BookmarksService {
     //   this.bookmarksSource.next(JSON.parse(temp));
     
     // Gets the DB bookmarks value from the backend
-    this.http.get<Bookmark[]>('http://localhost:8000/bookmarks').subscribe(bookmarks => {this.bookmarksSource.next(bookmarks)})
+    this.http.get<Bookmark[]>('http://localhost:8000/bookmarks').subscribe(
+      bookmarks => {this.bookmarksSource.next(bookmarks)},
+      error => {console.log("Bookmarks: Can't connect to the backend")});
   }
 
   // Adds a new bookmark to the bookmarks list
