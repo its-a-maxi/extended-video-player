@@ -13,7 +13,7 @@ export class BookmarksComponent implements OnInit {
     private currentVideoService: CurrentVideoService) { }
 
   // Array of strings, all the bookmarks will be stored here
-  bookmarks: string[] = [];
+  bookmarks: Bookmark[] = [];
 
   // Button state
   showBookmarks: boolean = false;
