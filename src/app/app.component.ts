@@ -14,7 +14,7 @@ export class AppComponent {
   constructor(private bookmarksService: BookmarksService) {}
 
   ngOnInit(): void {
-    this.bookmarksService.numberOfBookmarks().subscribe(number => this.numberOfBookmarksOnLoad = number);
+    this.bookmarksService.bookmarks$.subscribe(bookmarks => {this.numberOfBookmarksOnLoad = bookmarks.length})
     this.showSnackbar();
   }
 

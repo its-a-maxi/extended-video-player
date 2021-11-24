@@ -89,14 +89,6 @@ export class BookmarksService {
     return (this.bookmarks$);
   }
 
-  // Returns length of the bookmarks list
-  numberOfBookmarks(): Observable<number>
-  {
-    let bookmarksValue: Bookmark[] = this.bookmarksSource.value;
-
-    return (of(bookmarksValue.length));
-  }
-
   // Checks if the passed video exist in the bookmarks list
   isInBookmarks(videoURL: string): boolean
   {
