@@ -42,8 +42,6 @@ export class HistoryService {
     // Updates the BehaviourSubject with the updated list
     this.historySource.next(historyValue);
     
-    // Calls the backend to remove any duplicate in the DB
-    this.http.delete('http://localhost:8000/history/' + videoURL).subscribe();
     // Calls the backend to add a new history entry in the DB
     this.http.post<string>('http://localhost:8000/history', {videoURL}).subscribe()
 

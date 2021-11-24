@@ -15,7 +15,7 @@ app.use(cors(corsOptions));
 
 app.use(bodyParser.json());
 
-
+// Connects to Atlas mongoDB database
 MongoClient.connect('mongodb+srv://root:Password@cluster0.cdajx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', (err, client) => {
     if (err)
         return (console.error(err));
@@ -85,6 +85,12 @@ MongoClient.connect('mongodb+srv://root:Password@cluster0.cdajx.mongodb.net/myFi
 
     // A new history entry is added to the DB
     app.route('/history').post((req, res) => {
+        const requestedVideoURL = {videoURL : req.body.videoURL}
+        historyCollection.deleteOne(requestedVideoURL)
+        .then(result => {
+            console.log(result)
+        })
+        .catch(error => console.error(error))
         historyCollection.insertOne(req.body)
         .then(result => {
             console.log(result)
