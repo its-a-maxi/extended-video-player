@@ -32,7 +32,7 @@ part requires a little thought)
 
 * [Angular](https://angular.io/)
 * [NodeJs](https://nodejs.org/en/about/)
-* [MongoDB](https://www.mongodb.com/atlas/database)
+* [MongoDB Atlas](https://www.mongodb.com/atlas/database)
 * [Docker](https://www.docker.com/)
 * [Docker Compose](https://docs.docker.com/compose/)
 <p align="right">(<a href="#top">back to top</a>)</p>
