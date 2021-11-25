@@ -20,13 +20,13 @@ Expansion of the original [video-player](https://github.com/its-a-maxi/video-pla
 ### Exercise
 Take your last version of the Youtube Player. Implement the following improvements (all your
 components should be called in the app.component.html):
-* use databinding to set communication between components
-* use a service to set communication between components
-* use BehaviorSubject to set communication between components
-* implement a backend with nodeJs
-* implement a cache system to allow your application to work without backend connection (this
+* Use databinding to set communication between components
+* Use a service to set communication between components
+* Use BehaviorSubject to set communication between components
+* Implement a backend with nodeJs
+* Implement a cache system to allow your application to work without backend connection (this
 part requires a little thought)
-* dockerize your youtube application
+* Dockerize your youtube application
 
 ### Built With
 
