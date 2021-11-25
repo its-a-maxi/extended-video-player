@@ -8,7 +8,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <h1>video-player</h1>
+  <h1>extended-video-player</h1>
   <img src="product.gif" />
 </div>
 
