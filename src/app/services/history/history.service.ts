@@ -20,17 +20,34 @@ export class HistoryService {
   // An observable of the behaviourSubject is declared
   public history$ = this.historySource.asObservable();
 
+  // Initializes the behaviourSubject, for the app to work in case the backend is down
+  // the app will use localStorage in conjuction with a DB.
   constructor(private http: HttpClient)
   {
-    // // If some data were already stored in localStorage the BehaviourSubject ill be updated
-    // let temp = localStorage.getItem("videoHistory");
-    // if (temp)
-    //   this.historySource.next(JSON.parse(temp));
+    // If some data were present in localStorage <localHistory> will be updated
+    let localHistory: HistoryEntry[] = [];
+    let temp = localStorage.getItem("videoHistory");
+    if (temp) {
+        localHistory = JSON.parse(temp);
+    }
 
     // Gets the DB bookmarks value from the backend
     this.http.get<HistoryEntry[]>('http://localhost:8000/history').subscribe(
-      history => {this.historySource.next(history)},
-      error => {console.log("Bookmarks: Can't connect to the backend")});
+      history => {
+        // Checks if <localHistory> is empty, if it is the BehaviourSubject will
+        // be uptated with the DB history, else it will be updated with <localHistory>
+        if (!temp) {
+          this.historySource.next(history);
+        }
+        else {
+          this.historySource.next(localHistory);
+        }
+      },
+      error => {
+        console.log("Backend error: " + error.name);
+        // If the backend is not accesible the behaviourSubject is assigned <localHistory>
+        this.historySource.next(localHistory)
+      });
   }
 
   // Adds a new video to the history list
@@ -45,8 +62,8 @@ export class HistoryService {
     // Calls the backend to add a new history entry in the DB
     this.http.post<string>('http://localhost:8000/history', {videoURL}).subscribe()
 
-    // // Saves the updated list in the localStorage
-    // localStorage.setItem("videoHistory", JSON.stringify(historyValue));
+    // Saves the updated list in the localStorage
+    localStorage.setItem("videoHistory", JSON.stringify(historyValue));
 
     return (this.history$);
   }
@@ -61,8 +78,8 @@ export class HistoryService {
     this.http.delete('http://localhost:8000/history').subscribe();
 
 
-    // // Removes the bookmarks data stored in localStorage
-    // localStorage.removeItem("videoHistory");
+    // Removes the bookmarks data stored in localStorage
+    localStorage.removeItem("videoHistory");
 
     return (this.history$);
   }
@@ -81,8 +98,8 @@ export class HistoryService {
     // Calls the backend to remove passed video from the bookmarks in the DB 
     this.http.delete('http://localhost:8000/history/' + videoURL).subscribe();
 
-    // // Saves the updated list in the localStorage
-    // localStorage.setItem("videoHistory", JSON.stringify(historyValue));
+    // Saves the updated list in the localStorage
+    localStorage.setItem("videoHistory", JSON.stringify(historyValue));
 
     return (this.history$);
   }

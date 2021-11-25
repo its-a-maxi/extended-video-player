@@ -19,18 +19,33 @@ export class BookmarksService {
   // An observable of the behaviourSubject is declared
   public bookmarks$ = this.bookmarksSource.asObservable();
 
-
+  // Initializes the behaviourSubject, for the app to work in case the backend is down
+  // the app will use localStorage in conjuction with a DB.
   constructor(private http: HttpClient)
   {
-    // // If some data were already stored in localStorage the BehaviourSubject ill be updated
-    // let temp = localStorage.getItem("bookmarks");
-    // if (temp)
-    //   this.bookmarksSource.next(JSON.parse(temp));
+    // If some data were already stored in localStorage the BehaviourSubject ill be updated
+    let localBookmarks: Bookmark[] = [];
+    let temp = localStorage.getItem("bookmarks");
+    if (temp)
+      localBookmarks = JSON.parse(temp);
     
     // Gets the DB bookmarks value from the backend
     this.http.get<Bookmark[]>('http://localhost:8000/bookmarks').subscribe(
-      bookmarks => {this.bookmarksSource.next(bookmarks)},
-      error => {console.log("Bookmarks: Can't connect to the backend")});
+      bookmark => {
+      // Checks if <localBookmarks> is empty, if it is the BehaviourSubject will
+      // be uptated with the DB bookmarks list, else it will be updated with <localBookmarks>
+      if (!temp) {
+        this.bookmarksSource.next(bookmark);
+      }
+      else {
+        this.bookmarksSource.next(localBookmarks);
+      }
+    },
+    error => {
+      console.log("Backend error: " + error.name);
+      // If the backend is not accesible the behaviourSubject is assigned <localBookmarks>
+      this.bookmarksSource.next(localBookmarks)
+    });
   }
 
   // Adds a new bookmark to the bookmarks list
@@ -45,9 +60,8 @@ export class BookmarksService {
     // Calls the backend to add a new bookmark in the DB
     this.http.post<string>('http://localhost:8000/bookmarks', {videoURL}).subscribe()
 
-  
-    // // Saves the updated list in the localStorage
-    // localStorage.setItem("bookmarks", JSON.stringify(bookmarksValue));
+    // Saves the updated list in the localStorage
+    localStorage.setItem("bookmarks", JSON.stringify(bookmarksValue));
 
     return (this.bookmarks$);
   }
@@ -61,9 +75,8 @@ export class BookmarksService {
     // Calls the backend to clear the bookmark collection on the DB
     this.http.delete('http://localhost:8000/bookmarks').subscribe();
 
-
-    // // Removes the bookmarks data stored in localStorage
-    // localStorage.removeItem("bookmarks");
+    // Removes the bookmarks data stored in localStorage
+    localStorage.removeItem("bookmarks");
 
     return (this.bookmarks$);
   }
@@ -82,9 +95,8 @@ export class BookmarksService {
     // Calls the backend to remove passed video from the bookmarks in the DB 
     this.http.delete('http://localhost:8000/bookmarks/' + videoURL).subscribe();
 
-
-    // // Saves the updated list in the localStorage
-    // localStorage.setItem("bookmarks", JSON.stringify(bookmarksValue));
+    // Saves the updated list in the localStorage
+    localStorage.setItem("bookmarks", JSON.stringify(bookmarksValue));
 
     return (this.bookmarks$);
   }
