@@ -15,16 +15,26 @@
 <!-- ABOUT THE PROJECT -->
 ## ℹ️ About The Project
 
-Front-end exercise, you are asked to create a page with angular capable of displaying youtube videos, with an history of viewed videos and a bookmark system.
-The history and the bookmarks should be saved on local storage.
+Expansion of the original [video-player](https://github.com/its-a-maxi/video-player) excersice, the code was improved with various additions and a nodeJs backend linked to a mongoDB database was implemented.
 
 ### Exercise
-<img src="https://cdn.discordapp.com/attachments/651878762329276418/903022377158471780/unknown.png" />
+Take your last version of the Youtube Player. Implement the following improvements (all your
+components should be called in the app.component.html):
+* use databinding to set communication between components
+* use a service to set communication between components
+* use BehaviorSubject to set communication between components
+* implement a backend with nodeJs
+* implement a cache system to allow your application to work without backend connection (this
+part requires a little thought)
+* dockerize your youtube application
 
 ### Built With
 
 * [Angular](https://angular.io/)
-
+* [NodeJs](https://nodejs.org/en/about/)
+* [MongoDB](https://www.mongodb.com/atlas/database)
+* [Docker](https://www.docker.com/)
+* [Docker-compose](https://docs.docker.com/compose/)
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
@@ -33,13 +43,13 @@ The history and the bookmarks should be saved on local storage.
 
 ### Prerequisites
 
-* If you want to deploy the production application you need some type of simple server, I use [serve](https://www.npmjs.com/package/serve)
+* You need to have [docker](https://www.docker.com/) and [docker-compose](https://docs.docker.com/compose/) installed to be able to run this project
 
 ### Installation
 
 * Clone the repo
 ```sh
-  git clone https://github.com/its-a-maxi/video-player.git
+  git clone https://github.com/its-a-maxi/extended-video-player.git
 ```
   
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -50,27 +60,12 @@ The history and the bookmarks should be saved on local storage.
 
 * Navigate to the project folder
 
-* Install npm
+* Run Docker Compose
 ```sh
-  npm install
+  docker-compose up
 ```
 
-* To deploy production app:
-  * Build the app
-  ```sh
-    ng build
-  ```
-  * Deploy the app
-  ```sh
-    <simple server deployment> dist/angular-video-player/.
-  ```
-  
-* To use development mode:
-  * Deploy the app
-  ```sh
-    ng serve
-  ```
-  * Navigate to [localhost:4200](http://localhost:4200/)
+* Navigate to [localhost:4200](http://localhost:4200/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -80,7 +75,7 @@ The history and the bookmarks should be saved on local storage.
 
 Maximo Monroy - monroy.vds@gmail.com
 
-Project Link: [https://github.com/its-a-maxi/video-player](https://github.com/its-a-maxi/video-player)
+Project Link: [https://github.com/its-a-maxi/extended-video-player](https://github.com/its-a-maxi/extended-video-player)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
