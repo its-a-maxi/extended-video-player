@@ -34,7 +34,7 @@ part requires a little thought)
 * [NodeJs](https://nodejs.org/en/about/)
 * [MongoDB](https://www.mongodb.com/atlas/database)
 * [Docker](https://www.docker.com/)
-* [Docker-compose](https://docs.docker.com/compose/)
+* [Docker Compose](https://docs.docker.com/compose/)
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
