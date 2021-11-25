@@ -17,14 +17,15 @@ app.use(bodyParser.json());
 
 // Connects to Atlas mongoDB database
 MongoClient.connect('mongodb+srv://root:Password@cluster0.cdajx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', (err, client) => {
-    if (err)
+    if (err) {
         return (console.error(err));
+    }
     
     console.log('Connected to the Database');
 
     const db = client.db('videoPlayerDB');
-    const historyCollection = db.collection('history')
-    const bookmarksCollection = db.collection('bookmarks')
+    const historyCollection = db.collection('history');
+    const bookmarksCollection = db.collection('bookmarks');
 
     app.listen(8000, () => {
         console.log("Server started in port " + 8000 + "!");

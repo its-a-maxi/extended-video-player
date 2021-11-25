@@ -105,8 +105,9 @@ export class BookmarksService {
   isInBookmarks(videoURL: string): boolean
   {
     let bookmarksValue: Bookmark[] = this.bookmarksSource.value;
-    if (bookmarksValue.find(value => value.videoURL == videoURL))
+    if (bookmarksValue.find(value => value.videoURL == videoURL)) {
       return (true);
+    }
     return (false);
   }
 }

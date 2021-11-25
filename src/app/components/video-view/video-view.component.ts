@@ -41,11 +41,13 @@ export class VideoViewComponent implements OnInit {
   updateBookmarks(): void
   {
     // Checks if the video is in bookmarks, if it is, the video will be eliminated from bookmarks
-    if (this.isInBookmarks)
+    if (this.isInBookmarks) {
       this.bookmarksService.removeBookmark(this.currentVideo).subscribe();
+    }
     // If the video is not in bookmarks the video will be added
-    else
+    else {
       this.bookmarksService.addBookmark(this.currentVideo).subscribe();
+    }
     // Changes the button state to its contrary
     this.isInBookmarks = !this.isInBookmarks
   }

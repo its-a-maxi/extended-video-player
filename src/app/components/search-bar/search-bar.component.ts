@@ -28,10 +28,12 @@ export class SearchBarComponent implements OnInit {
   private getVideoId(videoURL: string): string | null
   {
     let rst = videoURL.match(/^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/);
-    if (rst && rst[7].length==11)
+    if (rst && rst[7].length==11) {
       return (rst[7]);
-    else
+    }
+    else {
       return (null);
+    }
  }
 
   // Executed on searchbar submit
@@ -41,11 +43,13 @@ export class SearchBarComponent implements OnInit {
     let videoId = this.getVideoId(this.videoURL)
 
     // If the parser returns a valid URL the video will be changed
-    if (videoId)
+    if (videoId) {
       this.currentVideoService.changeVideoURL(videoId)
+    }
     // If the parser returns an invalid URL an alert is shown
-    else
+    else {
       alert("Incorrect URL");
+    }
       
     // Resets input value
     this.videoURL = "";
